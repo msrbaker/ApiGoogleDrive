@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'gdstorage',
     'django_filters',
     'rest_framework',
     'common'
@@ -151,6 +152,32 @@ MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = (
 )
+
+# Google Drive settings
+# GDrive auth json file
+# https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+GDRIVE_CREDS_SERVICE_FILE = os.getenv(
+    'APP_GDRIVE_CREDS_SERVICE_FILE',
+    os.path.join(BASE_DIR, 'credentials_service.json')
+)
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = GDRIVE_CREDS_SERVICE_FILE
+
+# GDrive oauth json file
+# https://developers.google.com/drive/api/v3/quickstart/python?refresh=1&pli=1#step_1_turn_on_the
+GDRIVE_CREDS_OAUTH_FILE = os.getenv(
+    'APP_GDRIVE_CREDS_OAUTH_FILE',
+    os.path.join(BASE_DIR, 'credentials_oauth.json')
+)
+
+# String to append to the file name in GDrive. It should be a directory name
+# but GDrive doesn't create nor uses a dir even if it exists. Anyway, it can
+# be i.e. "somedir/" without issue.
+GDRIVE_STORAGE_PRENAME = os.getenv('APP_GDRIVE_STORAGE_PRENAME', 'gdrive-api/')
+
+# Email of the user. It's not mandatory, but without it, the file will appear
+# as "shared with me" instead of belonging to the user.
+GDRIVE_USER_EMAIL = os.getenv('GDRIVE_USER_EMAIL')
+# <>
 
 # REST Framework
 REST_FRAMEWORK = {
