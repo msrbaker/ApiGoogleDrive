@@ -1,0 +1,5 @@
+django~=2.1
+djangorestframework~=3.9
+google-api-python-client~=1.7
+oauth2client~=4.1
+django-filter~=2.0
