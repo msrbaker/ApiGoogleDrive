@@ -4,14 +4,7 @@ from common.models import File
 
 
 class FileSerializer(serializers.HyperlinkedModelSerializer):
+    """Model serializer for files."""
     class Meta:
         model = File
-        fields = ()
-
-
-class SearchInDocSerializer(serializers.Serializer):
-    def create(self, validated_data):
-        pass
-
-    def update(self, instance, validated_data):
-        pass
+        fields = ('titulo', 'descripcion', 'file')
