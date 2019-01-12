@@ -1,5 +1,14 @@
 {% extends 'common/base.html' %}
 {% block title %}Index{% endblock %}
 {% block content %}
-    <p>Try <a href="/api/v1/">/api/v1/</a>.</p>
+    <h2>File endpoint</h2>
+    <p>Send a file to the <a href="/api/v1/file/">endpoint</a>:</p>
+    <form method="post" action="/api/v1/file/" enctype="multipart/form-data">
+        <input type="text" name="titulo" placeholder="titulo" />
+        <input type="text" name="descripcion" placeholder="descripcion" />
+        <input type="file" name="file" />
+        <input type="submit" value="send" />
+    </form>
+    <h2>Search endpoint</h2>
+    <p>Search a string in a file with given id with the <a href="/api/v1/search-in-doc/">endpoint</a>.</p>
 {% endblock content %}
