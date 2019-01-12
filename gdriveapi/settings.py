@@ -176,7 +176,7 @@ GDRIVE_STORAGE_PRENAME = os.getenv('APP_GDRIVE_STORAGE_PRENAME', 'gdrive-api/')
 
 # Email of the user. It's not mandatory, but without it, the file will appear
 # as "shared with me" instead of belonging to the user.
-GDRIVE_USER_EMAIL = os.getenv('GDRIVE_USER_EMAIL')
+GDRIVE_USER_EMAIL = os.getenv('APP_GDRIVE_USER_EMAIL')
 # <>
 
 # REST Framework
