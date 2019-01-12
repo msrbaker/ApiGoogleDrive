@@ -1,6 +1,9 @@
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 from django.db import models
+
+from common import storage
 
 # Create your models here.
 
@@ -30,4 +33,11 @@ class User(AbstractUser):
 
 
 class File(CreationModificationDateMixin):
-    pass
+    titulo = models.CharField(
+        max_length=140,
+    )
+    descripcion = models.CharField(
+        max_length=255,
+    )
+    file = models.FileField(upload_to=settings.GDRIVE_STORAGE_PRENAME,
+                            storage=storage.gd_storage)
