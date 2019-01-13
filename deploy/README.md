@@ -51,6 +51,9 @@ Get and create the **required credentials** files:
 
 Custom locations and file names can be used, read more at settings documentation in *docs/SETTINGS.md*. Note that the path must match to a path inside the container.
 
+Google Drive API v3 requires explicit user permission, so after getting the credentials file you must run for the first time `python3 enable-creds.py` in the app directory (it can be done either from inside the container as well as outside, it doesn't require virtualenv).  
+It will open a browser window to ask for the users permission to give the app access to google drive. When it finishes, it will display "Authentication successful" and a list of files and ids if there are files in the Drive.
+
 #### Configure the web server
 
 Configure `conf/nginx-app.conf` or, **if using TLS**:

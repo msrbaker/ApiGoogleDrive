@@ -41,6 +41,12 @@ secrets:
 	@chmod 0440 .env
 
 deploy: secrets
+	@if [ ! -f "../app/token.json" ]; \
+	then \
+		echo "Enabling credentials..."; \
+		cd ../app && python3 enable-creds.py; \
+		cd ../deploy; \
+	fi;
 	@read -sr -n 1 -p "Complete .env config and press a key to continue (check the README for more info)" && echo
 	docker-compose config
 	@echo "Copying source code..."
