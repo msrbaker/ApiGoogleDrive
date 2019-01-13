@@ -16,7 +16,7 @@ from django.utils.text import slugify
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-VERSION = '0.1.0'
+VERSION = '0.2.0'
 APP_NAME = 'GDrive API'  # Custom fancy name
 
 # Quick-start development settings - unsuitable for production
