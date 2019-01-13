@@ -1,0 +1,77 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:mainline-alpine
+    read_only: true
+    restart: unless-stopped
+    tmpfs:
+      - /run
+      - /var/cache/nginx
+    ports:
+      - "80:80"
+      #- "443:443"
+    volumes:
+      - ./conf/nginx-app.conf:/etc/nginx/conf.d/app.conf:ro  # comment this line for TLS usage
+      # uncomment the following three lines for TLS usage, and comment the
+      # previous one
+      #- ./conf/nginx-app-ssl.conf:/etc/nginx/conf.d/app.conf:ro
+      #- ./conf/certs:/etc/nginx/certs:ro
+      #- ./conf/dhparams.pem:/etc/nginx/dhparams.pem:ro
+    depends_on:
+      - app
+  app:
+    build: .
+    read_only: true  # need locales to be built in the repo
+    restart: unless-stopped
+    tmpfs:
+      - /tmp
+    volumes:
+        - app-db-volume:/srv/app/code/db:rw
+        - app-emails-volume:/srv/app/code/emails:rw
+    environment:
+      - APP_SECRET_KEY
+      # APP_DEBUG: debug enabled or disabled.
+      #   true: debug enabled (not recommended for production).
+      #   false: debug disabled.
+      - APP_DEBUG
+      # APP_LOG_LEVEL: the minimum level of the messages that ar logged.
+      #   DEBUG: Low level system information for debugging purposes.
+      #   INFO: General system information.
+      #   WARNING: Information describing a minor problem that has occurred.
+      #   ERROR: Information describing a major problem that has occurred.
+      #   CRITICAL: Information describing a critical problem that has occurred.
+      - APP_LOG_LEVEL
+      # APP_TLS_MODE: Determine the way SSL is provided:
+      #   proxyssl: app is behind an SSL capable proxy.
+      #   ssl: app provides SSL by itself w/o proxy.
+      #   proxy: no SSL and app is behind a proxy.
+      #   none or blank: no SSL and no proxy.
+      - APP_TLS_MODE
+      # APP_ADMIN_NAMES: Comma-separated list of admin names.
+      - APP_ADMIN_NAMES
+      # APP_ADMIN_EMAILS: Comma-separated list of admin emails.
+      - APP_ADMIN_EMAILS
+      # APP_EMAIL_SECURITY: Determine security for the email.
+      #   tls: for ssl/tls.
+      #   starttls: for starttls.
+      #   none or empty: for no SSL at all.
+      - APP_EMAIL_SECURITY
+      - APP_EMAIL_HOST_USER
+      - APP_EMAIL_HOST_PASSWORD
+      - APP_EMAIL_HOST_PORT
+      - APP_EMAIL_HOST
+      - APP_EMAIL_FROM
+      - APP_HOST  # set server's fqdn.
+      - APP_FILES_STATIC
+      - APP_FILES_MEDIA
+      - APP_GDRIVE_CREDS_OAUTH_FILE
+      - APP_GDRIVE_CREDS_SERVICE_FILE
+      - APP_GDRIVE_STORAGE_PRENAME
+      - APP_GDRIVE_USER_EMAIL
+      - APP_SESSION_LIFETIME_SECONDS
+
+volumes:
+  app-db-volume:
+    driver: local
+  app-emails-volume:
+    driver: local
