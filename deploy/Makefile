@@ -43,6 +43,9 @@ secrets:
 deploy: secrets
 	@read -sr -n 1 -p "Complete .env config and press a key to continue (check the README for more info)" && echo
 	docker-compose config
+	@echo "Copying source code..."
+	@[ -d "./app" ] || rm -rf ./app;
+	@cp -pr ../app ./app
 	@echo "Creating directories..."
 	mkdir backups 2>/dev/null || echo "Backups dir exists"
 	@echo "Building images..."
@@ -55,6 +58,9 @@ deploy: secrets
 	@echo "All done!"
 
 upgrade: backup-logs
+	@echo "Copying source code..."
+	@[ -d "./app" ] || rm -rf ./app;
+	@cp -pr ../app ./app
 	@echo "Rebuilding app..."
 	docker-compose build app
 	@echo "Stopping containers..."

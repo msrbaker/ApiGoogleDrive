@@ -73,6 +73,10 @@ The **mandatory settings** to fill for a production deploy are: APP_DEBUG, APP_H
 
 To deploy it manually, continue reading here.
 
+#### Copying source code
+
+Copy the source code to a subdirectory: `cp -pr ../app ./app`. This can be deleted after deploying.
+
 #### Setting environment vars
 
 Create an `.env` file with the required environment variables (mor info in *docs/SETTINGS.md*). A sample `env` file is provided for copying: `cp env .env`.
@@ -125,6 +129,8 @@ Backup logs (they get lost if the container is removed):
 
 Upgrade the app source code inside the `app` directory by pulling from origin or checking out the corresponding tag or branch.
 
+Copy the source code to a subdirectory, removing it first if it exists: `rm rf ./app; cp -pr ../app ./app`. This can be deleted after deploying.
+
 Rebuild:
 
 `:~# docker-compose build app`.
@@ -147,8 +153,9 @@ Start containers:
 
 List migrations:
 
-`:~# docker-compose exec app /bin/ash -c "python manage.py showmigrations --list"`
+`:~# docker-compose exec app /bin/ash -c "python manage.py showmigrations --list"`.
 
 If necessary execute migrations:
 
-`:~# docker-compose exec app /bin/ash -c "python manage.py migrate --noinput"`
+`:~# docker-compose exec app /bin/ash -c "python manage.py migrate --noinput"`.
+
